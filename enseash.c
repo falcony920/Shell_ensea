@@ -8,7 +8,7 @@ int main()
     // Display welcome message
     write(STDOUT_FILENO, "Welcome to ENSEA Tiny Shell.\nType 'exit' to quit.\nenseash % ", 60);
 
-    char command[128];
+    char command[256];
     while (1)
     {
         // Read user input
