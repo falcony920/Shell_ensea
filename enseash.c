@@ -3,31 +3,42 @@
 #include <unistd.h>
 #include <string.h>
 
+#define WELCOME_MSG "Welcome to ENSEA Tiny Shell.\nType 'exit' to quit.\nenseash % "
+#define EXIT_CMD "exit"
+#define EXIT_MSG "Bye bye...\n"
+
 int main()
 {
-    // Display welcome message
-    write(STDOUT_FILENO, "Welcome to ENSEA Tiny Shell.\nType 'exit' to quit.\nenseash % ", 60);
+    // It writes the message to the standard output (STDOUT).
+    write(STDOUT_FILENO, WELCOME_MSG, 60);
 
-    char command[256];
+    char command[128]; // Buffer to hold the user input
+
     while (1)
     {
-        // Read user input
+        // We read from the standard input (STDIN) and store it in the 'command' buffer.
         ssize_t n = read(STDIN_FILENO, command, sizeof(command) - 1);
+
+        // 'read' returns the number of bytes read. If the user input is invalid (n <= 0),
+        // we break out of the loop.
         if (n <= 0)
             break;
 
-        // Remove newline character
+        // The 'read' function leaves a newline character at the end of the user input,
+        // so we remove it manually by replacing it with a null terminator.
+        // This ensures the command string is properly formatted without extra newlines.
         command[n - 1] = '\0';
 
-        // Exit condition
-        if (strcmp(command, "exit") == 0)
+        // 'strcmp' function compares two strings.
+        // If the strings match, it returns 0, indicating the user typed 'exit'.
+        if (strcmp(command, EXIT_CMD) == 0)
         {
-            write(STDOUT_FILENO, "Bye bye...\n", 11);
+            write(STDOUT_FILENO, EXIT_MSG, 11);
             break;
         }
 
-        // Display prompt again
         write(STDOUT_FILENO, "enseash % ", 10);
     }
+
     return 0;
 }
