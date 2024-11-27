@@ -2,10 +2,14 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include "fortunedate.h"
 
 #define WELCOME_MSG "Welcome to ENSEA Tiny Shell.\nType 'exit' to quit.\nenseash % "
+#define FORTUNE_CMD "fortune"
+#define DATE_CMD "date"
 #define EXIT_CMD "exit"
 #define EXIT_MSG "Bye bye...\n"
+#define UNKNOWN_CMD "Unknown command, please retry\n"
 
 int main()
 {
@@ -35,6 +39,11 @@ int main()
         {
             write(STDOUT_FILENO, EXIT_MSG, 11);
             break;
+        }
+        // Replace the previous command execution logic with this:
+        else
+        {
+            execute_command(command);
         }
 
         write(STDOUT_FILENO, "enseash % ", 10);
