@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <string.h>
 #include "fortunedate.h"
+#include "pipe.h"
 
 #define WELCOME_MSG "Welcome to ENSEA Tiny Shell.\nType 'exit' to quit.\nenseash % "
 #define FORTUNE_CMD "fortune"
@@ -40,7 +41,12 @@ int main()
             write(STDOUT_FILENO, EXIT_MSG, 11);
             break;
         }
-        // Replace the previous command execution logic with this:
+        // Check if the command contains a pipe ('|')
+        else if (strchr(command, '|') != NULL)
+        {
+            execute_piped_command(command); // Handle pipe redirection
+            write(STDOUT_FILENO, "enseash % ", 10);
+        }
         else
         {
             execute_command(command);
