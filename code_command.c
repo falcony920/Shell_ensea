@@ -36,11 +36,18 @@ void display_command_status(int status)
     {
         // If the process was terminated by a signal
         int signal = WTERMSIG(status);
+
+        // Debugging information
+        printf("Debug: Process terminated by signal %d\n", signal);
+
         char signal_msg[50];
         signal_msg[0] = '\0';
 
-        // Convert signal number to string
-        itoa(signal, signal_msg);
+        // Convert signal number to string (using snprintf for safety)
+        sprintf(signal_msg, "%d", signal);
+
+        // Additional debugging information
+        printf("Debug: Signal message to be displayed: enseash [sign:%s]\n", signal_msg);
 
         write(STDOUT_FILENO, "enseash [sign:", 14);
         write(STDOUT_FILENO, signal_msg, strlen(signal_msg));
