@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int main()
+int crash_program()
 {
     // This will cause a segmentation fault
     int *ptr = NULL;

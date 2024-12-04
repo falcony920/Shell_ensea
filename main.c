@@ -46,7 +46,7 @@ int main()
             execute_command(command);
         }
 
-        write(STDOUT_FILENO, "enseash % ", 10);
+        // write(STDOUT_FILENO, "enseash % ", 10);
     }
 
     return 0;

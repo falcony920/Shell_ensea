@@ -23,13 +23,13 @@ void display_command_status(int status)
 
         if (exit_code == 0)
         {
-            write(STDOUT_FILENO, "enseash [exit:0] % ", 18);
+            write(STDOUT_FILENO, "enseash [exit:0] %  ", 19);
         }
         else
         {
             write(STDOUT_FILENO, "enseash [exit:", 14);
             write(STDOUT_FILENO, exit_code_msg, strlen(exit_code_msg));
-            write(STDOUT_FILENO, "] % ", 4);
+            write(STDOUT_FILENO, "] %  ", 5);
         }
     }
     else if (WIFSIGNALED(status))
@@ -37,20 +37,14 @@ void display_command_status(int status)
         // If the process was terminated by a signal
         int signal = WTERMSIG(status);
 
-        // Debugging information
-        printf("Debug: Process terminated by signal %d\n", signal);
-
         char signal_msg[50];
         signal_msg[0] = '\0';
 
         // Convert signal number to string (using snprintf for safety)
         sprintf(signal_msg, "%d", signal);
 
-        // Additional debugging information
-        printf("Debug: Signal message to be displayed: enseash [sign:%s]\n", signal_msg);
-
         write(STDOUT_FILENO, "enseash [sign:", 14);
         write(STDOUT_FILENO, signal_msg, strlen(signal_msg));
-        write(STDOUT_FILENO, "] % ", 4);
+        write(STDOUT_FILENO, "] %  ", 5);
     }
 }
