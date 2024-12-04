@@ -6,12 +6,14 @@
 #include "code_command.h"
 
 #include <sys/wait.h>
+#include <time.h>
 
 #define UNKNOWN_CMD "Unknown command, please retry\n"
 #define ERROR_FORK "Failed to fork\n"
 
 void execute_command(const char *input)
 {
+
     // Tokenize the input command to handle arguments
     char *command = strdup(input);
     char *args[100];
@@ -39,9 +41,19 @@ void execute_command(const char *input)
     else
     {
         // In parent process, wait for the child to complete
+
+        // Record start time
+        struct timespec start_time, end_time;
+        clock_gettime(CLOCK_MONOTONIC, &start_time);
+
         int status;
         waitpid(pid, &status, 0); // Wait for child to finish
-        display_command_status(status);
+
+        // Record end time
+        clock_gettime(CLOCK_MONOTONIC, &end_time);
+
+        // Display the command status along with the execution time
+        display_command_status(status, start_time, end_time);
     }
 
     free(command); // Free the duplicated string
